@@ -50,7 +50,7 @@ else
             mkdir -p $__nixstall_bin
         fi
         # because curl might fail and write grabage/blank to the script
-        cp $__nixstall_script "/tmp/nixstall_bak.sh"
+        [ -s $__nixstall_script ] && cp $__nixstall_script "/tmp/nixstall_bak.sh"
 
         curl -sL "$__nixstall_url" > $__nixstall_script
         chmod +x "$__nixstall_script"
