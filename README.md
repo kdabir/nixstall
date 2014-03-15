@@ -17,7 +17,7 @@ Or from the local filesystem using:
 - Install any standard package that has `bin` directory
 - Download and install archive from remote url or from local filesystem
 - Developers can distribute the snippet like the ones above for their packages as installer.
-
+- Don't need to wait for the maintainer to update the package in package manager.
 
 ## Why?
 
@@ -80,4 +80,11 @@ gets even terse when you use `nixstall` that's already there on your machine now
 
 > Note: Ant can be, of course, installed with other package managers. I have chosen `ant` as an example because most of
 > us know it and its binaries are small enough to be downloaded.
+
+
+## Limitations
+
+- Archives must follow standard structure i.e. they must have `bin` directory in them.
+- Archives must be self contained. No post processing is supported.
+- You can potentially install multiple versions of same package, and all may end up in PATH
 
