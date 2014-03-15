@@ -1,23 +1,37 @@
 nixstall
 ========
 
-Generic installer for **\*nix** platform for the packages are not listed in your favourite package manager.
+Generic installer for **\*nix** platform for the packages are *not* listed in your favourite package manager.
 
 Install just about anything from the url using the following command:
 
-    curl -L http://git.io/nixstall | bash -s get http://somesite.com/somepackage-1.2.3.zip
+    nixstall get http://somesite.com/package-1.2.3.zip
 
 Or from the local filesystem using:
 
-    curl -L http://git.io/nixstall | bash -s /path/to/package-1.2.3.zip
+    nixstall /path/to/package-1.2.3.zip
+
+
+If it's the *first* time you are using `nixstall`, then use:
+
+    curl -L http://git.io/nixstall | bash -s get http://somesite.com/somepackage-1.2.3.zip
+
 
 ## Features
 
-- No need to install `nixstall` itself explicitly.
-- Install any standard package that has `bin` directory
 - Download and install archive from remote url or from local filesystem
-- Developers can distribute the snippet like the ones above for their packages as installer.
+
+- Install any standard package that has `bin` directory
+
+- `nixstall` manages itself automatically. You don't even need to install it.
+
+- Developers can distribute the snippet like the following for their packages as installer.
+        `curl -L http://git.io/nixstall | bash -s get http://yoursite.com/yourpackage-1.2.3.zip`
+
 - Don't need to wait for the maintainer to update the package in package manager.
+
+- `PATH` managed automatically
+
 
 ## Why?
 
@@ -49,11 +63,10 @@ Let's install Ant. We know it lives [here](http://archive.apache.org/dist/ant/bi
 This installs ant and in fact install nixstall as well. Now next time on you can use `nixstall` command directly and it all
 gets even terse when you use `nixstall` that's already there on your machine now:
 
-1. Installing nixstall itself. Nixstall installs itself whenever you install any package for the first time. But you you
-   still want to install nixstall first :
+1. Installing nixstall **itself**. Nixstall installs itself whenever you install any package for the first time. But if you
+   want to install nixstall first :
 
         curl -L http://git.io/nixstall | bash -s self
-
 
 2. Getting archive directly from the site:
 
@@ -77,6 +90,10 @@ gets even terse when you use `nixstall` that's already there on your machine now
 
         nixstall_reload
 
+7. Updating nixstall
+
+        nixstall self
+
 
 > Note: Ant can be, of course, installed with other package managers. I have chosen `ant` as an example because most of
 > us know it and its binaries are small enough to be downloaded.
@@ -88,3 +105,9 @@ gets even terse when you use `nixstall` that's already there on your machine now
 - Archives must be self contained. No post processing is supported.
 - You can potentially install multiple versions of same package, and all may end up in PATH
 
+## Troubleshooting
+
+- If the `nixstall` script or shell functions are not loaded for some reason, try:
+    `source ~/.nixstall/nixstall/bin/nixstall`
+
+- If that does not exist, try one `curl -sL http://git.io/nixstall | bash -s self`
