@@ -125,7 +125,7 @@ else
 
     # TODO checking existance of variables from sourced script seems to be flawed
     # need to fix that
-    if type nixstall_reload > /dev/null; then
+    if type nixstall_reload > /dev/null 2>&1; then
         echo -e "\nPlease close this terminal session and open a new one or use 'nixstall_reload'"
     else
         echo -e "\nPLEASE CLOSE THIS TERMINAL SESSION AND OPEN A NEW ONE"
