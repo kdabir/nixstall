@@ -63,8 +63,8 @@ else
             for file in $bash_profile_file $zshrc_file
             do
                 echo "updating $file"
-                echo "\n# Added by nixstall, don't remove unless you know what you are doing" >> $file
-                echo "[[ -s \"${__nixstall_script}\" ]] && source \"${__nixstall_script}\"\n" >> $file
+                echo -e "\n# Added by nixstall, don't remove unless you know what you are doing" >> $file
+                echo -e "[[ -s \"${__nixstall_script}\" ]] && source \"${__nixstall_script}\"\n" >> $file
             done
 
             echo "PLEASE CLOSE THIS TERMINAL SESSION AND OPEN A NEW ONE"
