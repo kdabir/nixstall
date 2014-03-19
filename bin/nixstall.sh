@@ -26,7 +26,7 @@ if [[ "$#" == "0" ]]; then
 
     function nixstall_link() {
         if [[ "$#" == "0" ]]; then
-            ln -s . $__nixstall_dir
+            ln -s $(pwd) $__nixstall_dir
         else
             ln -s $1 $__nixstall_dir
         fi

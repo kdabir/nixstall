@@ -84,7 +84,7 @@ gets even terse when you use `nixstall` that's already there on your machine now
 
 5. Listing paackages installed
 
-        nixstall_link
+        nixstall_list
 
 6. Reloading path when new package is installed without opening new terminal
 
