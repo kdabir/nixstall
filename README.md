@@ -1,7 +1,7 @@
 nixstall
 ========
 
-Generic installer for **\*nix** platform for the packages are *not* listed in your favourite package manager.
+Generic installer on **\*nix** platform for the packages that are **not** listed/updated in your favourite package manager.
 
 Install just about anything from the url using the following command:
 
@@ -78,7 +78,7 @@ gets even terse when you use `nixstall` that's already there on your machine now
 
 4. From already extracted dir:
 
-        nixstall_link /path/to/ant-1.9.3
+        nixstall_link /absolute/path/to/ant-1.9.3
 
     This just creates symlink and does not copy content.
 
