@@ -100,7 +100,13 @@ gets even terse when you use `nixstall` that's already there on your machine now
 
         $ nixstall self
 
-8. Deleting everything
+8. Deleting single package, for example `ant` in this case. You can find path using `nixstall list` command
+    
+        $ rm -rf  ~/.nixstall/apache-ant-1.9.3        
+
+    Nothing more to do (path is automatically managed)
+    
+9. Deleting everything including nixstall
     
         $ rm -rf ~/.nixstall
         
