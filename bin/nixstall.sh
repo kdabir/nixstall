@@ -43,7 +43,7 @@ else
     ## this will execute when nixstall is called with some params
 
     ## url from where to get latest nixstall, if required
-    __nixstall_url="https://raw.github.com/kdabir/nixstall/master/bin/nixstall.sh"
+    __nixstall_url="https://raw.githubusercontent.com/kdabir/nixstall/master/bin/nixstall.sh"
 
     # where nixstall itself will be installed
     __nixstall_home="${__nixstall_dir}/nixstall"
