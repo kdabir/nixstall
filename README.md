@@ -103,7 +103,7 @@ gets even terse when you use `nixstall` that's already there on your machine now
 
 - Archives must follow standard structure i.e. they must have `bin` directory in them.
 - Archives must be self contained. No post processing is supported.
-- You can potentially install multiple versions of same package, and all may end up in PATH
+- You can potentially install multiple versions of same package, and all may end up in `$PATH`. 
 
 ## Troubleshooting
 
@@ -111,3 +111,19 @@ gets even terse when you use `nixstall` that's already there on your machine now
     `source ~/.nixstall/nixstall/bin/nixstall`
 
 - If that does not exist, try one `curl -sL http://git.io/nixstall | bash -s self`
+
+
+## Supported On:
+
+- bash / zsh
+- Mac OS / Linux 
+- Zip archives / extracted archives
+
+
+## Developing locally
+
+1. clone the repo
+
+2. edit `bin/nixstall.sh`
+
+3. run `$ bash bin/nixstall.sh <..>` 

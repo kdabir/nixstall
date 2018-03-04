@@ -4,55 +4,27 @@
 ## This is a `bash` script, don't use it with `sh`.
 ## it is a single filer and intend to be simple
 
-## the dir where everything will be installed
-__nixstall_dir="${HOME}/.nixstall"
+## This variable is available in the shell in which nixstall is sourced
+export _NIXSTALL_PATHS=""
 
-if [[ "$#" == "0" ]]; then
-    # when called with no arguments, we are in init/source mode!
-    # if this is executed in new shell, it should not have any effect
+## when sourcing the file, `nixstall` will be available in shell as function
+function nixstall(){
 
-    export _NIXSTALL_PATHS=""
-    ## add some functions to current shell may be
-    function nixstall_reload() {
-        for dir in $(find -L ${__nixstall_dir} -maxdepth 2 -type d -name bin); do
-            _NIXSTALL_PATHS="${_NIXSTALL_PATHS:+"$_NIXSTALL_PATHS:"}$dir"
-
-            # http://superuser.com/a/39995/66921
-             if [ -d "$dir" ] && [[ ":$PATH:" != *":$dir:"* ]]; then
-                PATH="${PATH:+"$PATH:"}$dir"
-            fi
-        done
-    }
-
-    function nixstall_link() {
-        if [[ "$#" == "0" ]]; then
-            ln -s $(pwd) $__nixstall_dir
-        else
-            ln -s $1 $__nixstall_dir
-        fi
-    }
-
-    function nixstall_list() {
-        ls $__nixstall_dir
-    }
-
-    # reload only nixstall dir exists, otherwise find will fail
-    [ -d "$__nixstall_dir" ] && nixstall_reload
-
-else
-    ## this will execute when nixstall is called with some params
+    ## the dir where everything will be installed, not configurable as of now
+    local __nixstall_dir="${HOME}/.nixstall"
 
     ## url from where to get latest nixstall, if required
-    __nixstall_url="https://raw.githubusercontent.com/kdabir/nixstall/master/bin/nixstall.sh"
+    local __nixstall_url="https://raw.githubusercontent.com/kdabir/nixstall/master/bin/nixstall.sh"
 
     # where nixstall itself will be installed
-    __nixstall_home="${__nixstall_dir}/nixstall"
-    __nixstall_bin="${__nixstall_home}/bin"
-    __nixstall_script="${__nixstall_bin}/nixstall"
-    __nixstall_version="0.1"
+    local __nixstall_home="${__nixstall_dir}/nixstall"
+    local __nixstall_bin="${__nixstall_home}/bin"
+    local __nixstall_script="${__nixstall_bin}/nixstall"
+    local __nixstall_version="0.1"
 
-    ## if user explicitly aksed or if the nixstall script is not present locally
-    if [ "$1" == "self" ] || [ ! -s $__nixstall_script ];then
+    ################# INSTALLING SELF ###################
+    ## if user explicitly aksed OR if the nixstall script is not present locally
+    if [[ "$1" == "self" ]] || [ ! -s $__nixstall_script ];then
 
         ## if nixstall's bin is not present
         if [ ! -d "$__nixstall_bin" ]; then
@@ -93,7 +65,7 @@ else
         fi
 
         ## if only self was to be installed, we are done and exit now
-        if [ "$1" == "self" ]; then
+        if [[ "$1" == "self" ]]; then
             echo "You may need to open a new terminal for changes to reflect!"
             exit 0
         fi
@@ -101,10 +73,14 @@ else
 
     ## TODO validate if the archive has right directory strucutre, i.e. it contains `bin`
 
+    ################# OTHER OPTIONS ###################
+
+    ################# GET REMOTE ARCHIVE ###################
     ## we have to download the archive
-    if [ "$1" == "get" ] && [ -n "$2" ];then
+    if [[ "$1" == "get" ]] && [ -n "$2" ];then
         # FILE=${2##*://*/}
         ## currently supporting only zip
+        ## since file name is constant, this command is not suitable for running from multiple processes simultaneously
         FILE="/tmp/nixstall-archive.zip"
         curl -L -o "$FILE" "$2"
         echo "archive file downloaded as : $FILE, copy it if you want to save it"
@@ -114,21 +90,49 @@ else
 
         echo "Downloaded archive saved as: $FILE, copy it if you want to save it"
 
-    elif [ -s "$1" ];then
+    ################# GET LOCAL ARCHIVE ###################
+    ## $1 is a file (zip) TODO more formats
+    elif [[ -s "$1" ]];then
 
         unzip -d $__nixstall_dir $1
 
+    ################# LINK DIRECT PATH ###################
+    elif [[ "$1" == "link" ]]; then ## link to existing dir
+        if [ -d "$2" ]; then
+            echo "$2 must be a valid directory path"
+            exit 2
+        fi
+
+        ln -s $2 $__nixstall_dir
+
+    ################# RELOAD (UPDATE PATH) ###################
+    elif [[ "$1" == "reload" ]] || [[ "$1" == "load" ]] || [[ "$#" == "0" ]];then
+
+        if [ -d "$__nixstall_dir" ] ; then
+            ## Find all dirs having bin/ dir
+            for dir in $(find -L ${__nixstall_dir} -maxdepth 2 -type d -name bin); do
+                _NIXSTALL_PATHS="${_NIXSTALL_PATHS:+"$_NIXSTALL_PATHS:"}$dir"
+
+                # Add to path only if not already present in PATH
+                # http://superuser.com/a/39995/66921
+                 if [ -d "$dir" ] && [[ ":$PATH:" != *":$dir:"* ]]; then
+                    PATH="${PATH:+"$PATH:"}$dir"
+                fi
+            done
+        fi
+
+    ################# LIST INSTALLED PACKAGES ###################
+    elif [[ "$1" == "list" ]]; then ## list
+
+        ls $__nixstall_dir
+
     else
+        # TODO -- print help
         echo "not a valid usage"
         exit 1
     fi
 
-    # TODO checking existance of variables from sourced script seems to be flawed
-    # need to fix that
-    if type nixstall_reload > /dev/null 2>&1; then
-        echo -e "\nPlease close this terminal session and open a new one or use 'nixstall_reload'"
-    else
-        echo -e "\nPLEASE CLOSE THIS TERMINAL SESSION AND OPEN A NEW ONE"
-    fi
+}
 
-fi
+## Call nixstall, in case of sourcing, it will just set PATH variable.
+nixstall "$@"
