@@ -1,7 +1,7 @@
 nixstall
 ========
 
-Generic installer for **\*nix** platform for the packages that are **not** listed/updated in your favourite package manager.
+Generic installer for **\*nix** platform for the packages that are **not** listed in your favourite package manager.
 
 Install just about anything from the url using the following command:
 
@@ -11,7 +11,6 @@ Or from the local filesystem using:
 
     $ nixstall /path/to/package-1.2.3.zip
 
-
 If it's the *first* time you are using `nixstall`, then use:
 
     $ curl -L http://git.io/nixstall | bash -s get http://somesite.com/somepackage-1.2.3.zip
@@ -19,7 +18,7 @@ If it's the *first* time you are using `nixstall`, then use:
 
 ## Features
 
-- Download and install archive from remote url or from local filesystem
+- Download and install archive from remote url or use from local filesystem
 
 - Install any standard package that has `bin` directory
 
@@ -31,6 +30,8 @@ If it's the *first* time you are using `nixstall`, then use:
 - Don't need to wait for the maintainer to update the package in package manager.
 
 - `PATH` updated automatically (dynamically)
+
+- No dependencies apart from bash and curl
 
 
 ## Why?
