@@ -1,7 +1,7 @@
 nixstall
 ========
 
-Generic installer on **\*nix** platform for the packages that are **not** listed/updated in your favourite package manager.
+Generic installer for **\*nix** platform for the packages that are **not** listed/updated in your favourite package manager.
 
 Install just about anything from the url using the following command:
 
