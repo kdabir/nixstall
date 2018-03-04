@@ -41,7 +41,7 @@ Most packages follow a simple structure
     |--+ package-v1.0.2/
     |  |--+ bin/
     |  |--+ lib/
-    |  |--+ whatever/
+    |  |--+ etc/
     |  ..
 
 But Installation requires atleast three steps:
@@ -78,17 +78,17 @@ gets even terse when you use `nixstall` that's already there on your machine now
 
 4. From already extracted dir:
 
-        nixstall_link /absolute/path/to/ant-1.9.3
+        nixstall link /absolute/path/to/ant-1.9.3
 
     This just creates symlink and does not copy content.
 
 5. Listing paackages installed
 
-        nixstall_list
+        nixstall list
 
 6. Reloading path when new package is installed without opening new terminal
 
-        nixstall_reload
+        nixstall reload
 
 7. Updating nixstall
 
